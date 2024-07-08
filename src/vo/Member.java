@@ -5,6 +5,7 @@ public class Member {
   private String memberName;
   private String memberPassword;
   private int memberAge;
+  private String newPassword;
 
   public Member(String memberId, String memberName, String memberPassword, int memberAge) {
     this.memberId = memberId;
@@ -45,6 +46,14 @@ public class Member {
 
   public void setMemberPassword(String memberPassword) {
     this.memberPassword = memberPassword;
+  }
+
+  public String getNewPassword() {
+    return newPassword;
+  }
+
+  public void setNewPassword(String newPassword) {
+    this.newPassword = newPassword;
   }
 
   @Override
