@@ -3,11 +3,13 @@ package vo;
 public class Member {
   private String memberId;
   private String memberName;
-  private String memberAge;
+  private String memberPassword;
+  private int memberAge;
 
-  public Member(String memberId, String memberName, String memberAge) {
+  public Member(String memberId, String memberName, String memberPassword, int memberAge) {
     this.memberId = memberId;
     this.memberName = memberName;
+    this.memberPassword = memberPassword;
     this.memberAge = memberAge;
   }
 
@@ -29,12 +31,20 @@ public class Member {
     this.memberName = memberName;
   }
 
-  public String getMemberAge() {
+  public int getMemberAge() {
     return memberAge;
   }
 
-  public void setMemberAge(String memberAge) {
+  public void setMemberAge(int memberAge) {
     this.memberAge = memberAge;
+  }
+
+  public String getMemberPassword() {
+    return memberPassword;
+  }
+
+  public void setMemberPassword(String memberPassword) {
+    this.memberPassword = memberPassword;
   }
 
   @Override
@@ -42,7 +52,8 @@ public class Member {
     return "Member{" +
         "memberId='" + memberId + '\'' +
         ", memberName='" + memberName + '\'' +
-        ", memberAge='" + memberAge + '\'' +
+        ", memberPassword='" + memberPassword + '\'' +
+        ", memberAge='" + memberAge +
         '}';
   }
 }
