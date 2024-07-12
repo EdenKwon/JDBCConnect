@@ -17,15 +17,15 @@ public class ExecuteMenu {
           memberCRUD.execute();
           break;
         case 2:
-          memberCRUD = new MemberInsert(getMemberInfo());
+          memberCRUD = new MemberInsert(getInsertInfo());
           memberCRUD.execute();
           break;
         case 3:
-          memberCRUD = new MemberUpdate(getMemberInfo());
+          memberCRUD = new MemberUpdate(getUpdateInfo());
           memberCRUD.execute();
           break;
         case 4:
-          memberCRUD = new MemberDelete(getMemberId());
+          memberCRUD = new MemberDelete(getDeleteInfo());
           memberCRUD.execute();
           break;
         case 5:
@@ -45,7 +45,7 @@ public class ExecuteMenu {
     System.out.println("==============================");
     System.out.println("1. 전체 멤버 조회하기");
     System.out.println("2. 멤버 추가하기");
-    System.out.println("3. 멤버 수정하기");
+    System.out.println("3. 멤버 비밀번호 변경");
     System.out.println("4. 멤버 삭제하기");
     System.out.println("5. 종료하기");
     System.out.println("==============================");
@@ -56,25 +56,26 @@ public class ExecuteMenu {
   }
 
   public static void exitMenu() {
+    System.out.println("bye bye :)");
     System.exit(0);
   }
 
-  public static String getMemberId() throws IOException {
+  public static String getDeleteInfo() throws IOException {
     String memberId;
 
     System.out.println("멤버 정보를 입력해주세요.");
-    System.out.print("멤버 아이디(숫자) : ");
+    System.out.print("멤버 아이디 : ");
 
     memberId = br.readLine();
 
     return memberId;
   }
 
-  public static Member getMemberInfo() throws IOException {
+  public static Member getInsertInfo() throws IOException {
 
     Member member = new Member();
-    System.out.println("멤버 정보를 입력해주세요.");
-    System.out.print("멤버 아이디(숫자) : ");
+    System.out.println("멤버 추가");
+    System.out.print("멤버 아이디 : ");
     member.setmemberId(br.readLine());
     System.out.print("멤버 이름 : ");
     member.setMemberName(br.readLine());
@@ -82,6 +83,20 @@ public class ExecuteMenu {
     member.setMemberPassword(br.readLine());
     System.out.print("멤버 나이 : ");
     member.setMemberAge(Integer.parseInt(br.readLine()));
+
+    return member;
+  }
+
+  public static Member getUpdateInfo() throws IOException {
+
+    Member member = new Member();
+    System.out.println("비밀번호 변경");
+    System.out.print("멤버 아이디 : ");
+    member.setmemberId(br.readLine());
+    System.out.print("현재 비밀번호 : ");
+    member.setMemberPassword(br.readLine());
+    System.out.print("수정할 비밀번호 : ");
+    member.setNewPassword(br.readLine());
 
     return member;
   }
