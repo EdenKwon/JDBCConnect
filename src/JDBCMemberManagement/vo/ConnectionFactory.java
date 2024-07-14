@@ -1,4 +1,4 @@
-package vo;
+package JDBCMemberManagement.vo;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

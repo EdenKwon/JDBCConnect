@@ -1,13 +1,11 @@
-package Model;
+package JDBCMemberManagement.Model;
 
-import java.awt.geom.RectangularShape;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
-import vo.ConnectionFactory;
-import vo.Member;
-import vo.MemberCRUD;
+import JDBCMemberManagement.vo.ConnectionFactory;
+import JDBCMemberManagement.vo.Member;
+import JDBCMemberManagement.vo.MemberCRUD;
 
 public class MemberUpdate implements MemberCRUD {
 

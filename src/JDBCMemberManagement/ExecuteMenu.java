@@ -1,7 +1,9 @@
-import Model.*;
+package JDBCMemberManagement;
+
+import JDBCMemberManagement.Model.*;
 import java.io.*;
-import vo.Member;
-import vo.MemberCRUD;
+import JDBCMemberManagement.vo.Member;
+import JDBCMemberManagement.vo.MemberCRUD;
 
 public class ExecuteMenu {
 
