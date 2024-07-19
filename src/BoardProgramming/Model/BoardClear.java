@@ -19,6 +19,7 @@ public class BoardClear implements BoardCRUD {
     connection = ConnectionFactory.getInstance().open();
 
     try {
+      connection = ConnectionFactory.getInstance().open();
       pstmt = connection.prepareStatement(query);
       result = pstmt.executeUpdate();
 
