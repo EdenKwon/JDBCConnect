@@ -2,7 +2,10 @@ package NewBoardProgramming.controller;
 
 import NewBoardProgramming.dao.BoardCRUDimpl;
 import NewBoardProgramming.dto.Board;
+import NewBoardProgramming.exceptions.BoardException;
+import NewBoardProgramming.exceptions.ErrorCode;
 import NewBoardProgramming.interfaces.BoardCRUD;
+import NewBoardProgramming.vo.Messages;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,13 +20,13 @@ public class SubMenu extends PrintBoard {
   public void subMenu_read(Board board) throws IOException, SQLException {
     this.board = board;
 
-    System.out.println("보조 메뉴 : 1.Update | 2.Delete | 3.List");
-    System.out.print("메뉴 선택 : ");
+    Messages.SUB_MENU.println();
+    Messages.MENU_CHOICE.println();
     int num = 0;
     try {
       num = Integer.parseInt(br.readLine());
-    } catch (IOException e) {
-      e.printStackTrace();
+    } catch (NumberFormatException e) {
+      throw new BoardException(ErrorCode.NOT_A_NUMBER);
     }
 
     switch (num) {
@@ -37,42 +40,41 @@ public class SubMenu extends PrintBoard {
         list();
         break;
       default:
-        System.out.println("잘못 입력하셨습니다.");
-        break;
+        throw new BoardException(ErrorCode.INVALID_INPUT_VALUE);
     }
   }
 
   public int subMenu_check() throws IOException {
     int num;
     while (true) {
-      System.out.println("보조 메뉴 : 1.OK | 2. Cancel");
+      Messages.SUB_MENU_CHECK.println();
 
       try {
         num = Integer.parseInt(br.readLine());
         if (num == 1 || num == 2) {
           return num;
         } else {
-          System.out.println("잘못 입력하셨습니다.");
+          throw new BoardException(ErrorCode.INVALID_INPUT_VALUE);
         }
       } catch (NumberFormatException e) {
-        System.out.println("숫자를 입력해주세요.");
+        throw new BoardException(ErrorCode.NOT_A_NUMBER);
       }
     }
   }
 
   public void update() throws IOException, SQLException {
-    System.out.println("[수정 내용 입력]");
-    System.out.print("제목 : ");
+    Messages.INPUT_MODIFY.println();
+    Messages.INPUT_TITLE.print();
     board.setBtitle(br.readLine());
-    System.out.print("내용 : ");
+    Messages.INPUT_CONTENT.print();
     board.setBcontent(br.readLine());
-    System.out.print("작성자 : ");
+    Messages.INPUT_WRITER.print();
     board.setBwriter(br.readLine());
 
     if (subMenu_check() == 1) {
       printResult(boardCRUD.update(board));
     } else {
-      System.out.println("취소했습니다.");
+      Messages.CANCEL.println();
     }
 
   }

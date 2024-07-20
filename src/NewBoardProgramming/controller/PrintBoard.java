@@ -1,6 +1,7 @@
 package NewBoardProgramming.controller;
 
 import NewBoardProgramming.dto.Board;
+import NewBoardProgramming.vo.Messages;
 import java.util.List;
 
 public class PrintBoard {
@@ -9,10 +10,10 @@ public class PrintBoard {
   public void printResult(int result) {
     switch (result) {
       case 1 :
-        System.out.println("완료했습니다.");
+        Messages.SUCCESS.println();
         break;
       case 0 :
-        System.out.println("다시 시도해주세요.");
+        Messages.TRY_AGAIN.println();
         break;
       default:
         //?
@@ -30,10 +31,10 @@ public class PrintBoard {
   }
 
   public void printBoard(Board board) {
-    System.out.println("번호 : " + board.getBno());
-    System.out.println("제목 : " + board.getBtitle());
-    System.out.println("내용 : " + board.getBcontent());
-    System.out.println("작성자 : " + board.getBwriter());
-    System.out.println("날짜 : " + board.getDate());
+    System.out.println(Messages.INPUT_BNO.getMessage() + board.getBno());
+    System.out.println(Messages.INPUT_TITLE.getMessage() + board.getBtitle());
+    System.out.println(Messages.INPUT_CONTENT.getMessage() + board.getBcontent());
+    System.out.println(Messages.INPUT_WRITER.getMessage() + board.getBwriter());
+    System.out.println(Messages.INPUT_DATE.getMessage() + board.getDate());
   }
 }
