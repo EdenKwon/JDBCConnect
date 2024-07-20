@@ -6,6 +6,7 @@ import NewBoardProgramming.dto.Board;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
 
 public class MainMenu extends PrintBoard {
 
@@ -14,7 +15,7 @@ public class MainMenu extends PrintBoard {
   Board board;
   SubMenu subMenu;
 
-  public void list() {
+  public void list() throws SQLException {
     System.out.println("[게시물 목록]");
     System.out.println("--------------------------------------------");
     System.out.println("no\twriter\tdate\t\ttitle");
@@ -28,7 +29,7 @@ public class MainMenu extends PrintBoard {
     mainMenu();
   }
 
-  public void mainMenu() {
+  public void mainMenu() throws SQLException {
     while (true) {
       System.out.println("메인 메뉴 : 1.Create | 2.Read | 3.Clear | 4.Exit");
       System.out.print("메뉴 선택 : ");
@@ -67,13 +68,13 @@ public class MainMenu extends PrintBoard {
     }
   }
 
-  public void create() throws IOException {
+  public void create() throws IOException, SQLException {
     board = new Board();
 
     System.out.println("[새 게시물 입력]");
     System.out.print("제목 : ");
     board.setBtitle(br.readLine());
-    System.out.println("내용 : ");
+    System.out.print("내용 : ");
     board.setBcontent(br.readLine());
     System.out.print("작성자 : ");
     board.setBwriter(br.readLine());
@@ -83,18 +84,23 @@ public class MainMenu extends PrintBoard {
     printResult(boardCRUD.create(board));
   }
 
-  public void read() throws IOException {
+  public void read() throws IOException, SQLException {
     System.out.print("bno : ");
     int num = Integer.parseInt(br.readLine());
 
     board = boardCRUD.selectOne(num);
+    if(board.getBno() == 0) {
+      System.out.println("해당 게시물이 없습니다.");
+      return;
+    }
+
     printBoard(board);
 
     subMenu = new SubMenu();
     subMenu.subMenu_read(board);
   }
 
-  public void clear() {
+  public void clear() throws SQLException {
     boardCRUD.clear();
   }
 

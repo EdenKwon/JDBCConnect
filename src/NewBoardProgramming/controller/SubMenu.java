@@ -6,6 +6,7 @@ import NewBoardProgramming.interfaces.BoardCRUD;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
 
 public class SubMenu extends PrintBoard {
 
@@ -13,7 +14,7 @@ public class SubMenu extends PrintBoard {
   BoardCRUD boardCRUD = new BoardCRUDimpl();
   Board board;
 
-  public void subMenu_read(Board board) throws IOException {
+  public void subMenu_read(Board board) throws IOException, SQLException {
     this.board = board;
 
     System.out.println("보조 메뉴 : 1.Update | 2.Delete | 3.List");
@@ -59,7 +60,7 @@ public class SubMenu extends PrintBoard {
     }
   }
 
-  public void update() throws IOException {
+  public void update() throws IOException, SQLException {
     System.out.println("[수정 내용 입력]");
     System.out.print("제목 : ");
     board.setBtitle(br.readLine());
@@ -76,11 +77,11 @@ public class SubMenu extends PrintBoard {
 
   }
 
-  public void delete() {
+  public void delete() throws SQLException {
     printResult(boardCRUD.delete(board));
   }
 
-  public void list() {
+  public void list() throws SQLException {
     printBoardList(boardCRUD.selectAll());
   }
 }
