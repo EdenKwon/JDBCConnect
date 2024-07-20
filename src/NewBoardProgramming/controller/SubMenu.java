@@ -2,6 +2,8 @@ package NewBoardProgramming.controller;
 
 import NewBoardProgramming.dao.BoardCRUDimpl;
 import NewBoardProgramming.dto.Board;
+import NewBoardProgramming.exceptions.BoardException;
+import NewBoardProgramming.exceptions.ErrorCode;
 import NewBoardProgramming.interfaces.BoardCRUD;
 import NewBoardProgramming.vo.Messages;
 import java.io.BufferedReader;
@@ -23,8 +25,8 @@ public class SubMenu extends PrintBoard {
     int num = 0;
     try {
       num = Integer.parseInt(br.readLine());
-    } catch (IOException e) {
-      e.printStackTrace();
+    } catch (NumberFormatException e) {
+      throw new BoardException(ErrorCode.NOT_A_NUMBER);
     }
 
     switch (num) {
@@ -38,8 +40,7 @@ public class SubMenu extends PrintBoard {
         list();
         break;
       default:
-        Messages.WRONG_INPUT.println();
-        break;
+        throw new BoardException(ErrorCode.INVALID_INPUT_VALUE);
     }
   }
 
@@ -53,10 +54,10 @@ public class SubMenu extends PrintBoard {
         if (num == 1 || num == 2) {
           return num;
         } else {
-          Messages.WRONG_INPUT.println();
+          throw new BoardException(ErrorCode.INVALID_INPUT_VALUE);
         }
       } catch (NumberFormatException e) {
-        System.out.println("숫자를 입력해주세요.");
+        throw new BoardException(ErrorCode.NOT_A_NUMBER);
       }
     }
   }

@@ -1,17 +1,12 @@
 package NewBoardProgramming.controller;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class ExecuteBoard {
 
-  public static void main(String[] args) throws SQLException {
+  public static void main(String[] args) throws SQLException, IOException {
     MainMenu menu = new MainMenu();
-
-    while (true) {
-      menu.list();
-    }
-
+    menu.list();
   }
-
-  // 예외처리 enum
 }

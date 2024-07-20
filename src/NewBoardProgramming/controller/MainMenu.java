@@ -1,6 +1,9 @@
 package NewBoardProgramming.controller;
 
 import NewBoardProgramming.dao.BoardCRUDimpl;
+import NewBoardProgramming.exceptions.BoardException;
+import NewBoardProgramming.exceptions.BoardExceptionList;
+import NewBoardProgramming.exceptions.ErrorCode;
 import NewBoardProgramming.interfaces.BoardCRUD;
 import NewBoardProgramming.dto.Board;
 import NewBoardProgramming.vo.Messages;
@@ -16,7 +19,7 @@ public class MainMenu extends PrintBoard {
   Board board;
   SubMenu subMenu;
 
-  public void list() throws SQLException {
+  public void list() throws SQLException, IOException {
     Messages.BOARD_LIST.println();
     Messages.BOARD_LIST_DIVIDER.println();
     Messages.BOARD_LIST_HEADER.println();
@@ -28,42 +31,37 @@ public class MainMenu extends PrintBoard {
     mainMenu();
   }
 
-  public void mainMenu() throws SQLException {
+  public void mainMenu() throws SQLException, IOException {
     while (true) {
       Messages.MAIN_MENU.println();
-      Messages.MENU_CHOICE.println();
+      Messages.MENU_CHOICE.print();
 
       int num = 0;
       try {
         num = Integer.parseInt(br.readLine());
-      } catch (IOException e) {
-        e.printStackTrace();
+      } catch (NumberFormatException e) {
+        System.out.println(ErrorCode.NOT_A_NUMBER.getMessage());
+        continue;
       }
 
-      switch (num) {
-        case 1: //create
-          try {
+      try {
+        switch (num) {
+          case 1: //create
             create();
-          } catch (IOException e) {
-            throw new RuntimeException(e);
-          }
-
-          break;
-        case 2: //read
-          try {
+            break;
+          case 2: //read
             read();
-          } catch (IOException e) {
-            throw new RuntimeException(e);
-          }
-          break;
-        case 3: //clear
-          clear();
-          break;
-        case 4: //exit
-          exit();
-        default:
-          Messages.WRONG_INPUT.println();
-          break;
+            break;
+          case 3: //clear
+            clear();
+            break;
+          case 4: //exit
+            exit();
+          default:
+            throw new BoardException(ErrorCode.INVALID_INPUT_VALUE);
+        }
+      } catch (BoardException e) {
+        //
       }
     }
   }
@@ -86,12 +84,17 @@ public class MainMenu extends PrintBoard {
 
   public void read() throws IOException, SQLException {
     System.out.print("bno : ");
-    int num = Integer.parseInt(br.readLine());
+    int num = 0;
+    try {
+      num = Integer.parseInt(br.readLine());
+    } catch (NumberFormatException e) {
+      System.out.println(ErrorCode.NOT_A_NUMBER.getMessage());
+      return;
+    }
 
     board = boardCRUD.selectOne(num);
-    if (board.getBno() == 0) {
-      Messages.NO_BOARD.println();
-      return;
+    if (!BoardExceptionList.isBoardExist(board.getBno())) {
+      throw new BoardException(ErrorCode.BOARD_NOT_FOUND);
     }
 
     printBoard(board);

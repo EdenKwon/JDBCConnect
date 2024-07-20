@@ -32,9 +32,9 @@ public class PrintBoard {
 
   public void printBoard(Board board) {
     System.out.println(Messages.INPUT_BNO.getMessage() + board.getBno());
-    System.out.println(Messages.INPUT_TITLE + board.getBtitle());
-    System.out.println(Messages.INPUT_CONTENT + board.getBcontent());
-    System.out.println(Messages.INPUT_WRITER + board.getBwriter());
-    System.out.println(Messages.INPUT_DATE + board.getDate());
+    System.out.println(Messages.INPUT_TITLE.getMessage() + board.getBtitle());
+    System.out.println(Messages.INPUT_CONTENT.getMessage() + board.getBcontent());
+    System.out.println(Messages.INPUT_WRITER.getMessage() + board.getBwriter());
+    System.out.println(Messages.INPUT_DATE.getMessage() + board.getDate());
   }
 }

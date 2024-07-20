@@ -19,7 +19,7 @@ public enum Messages {
   INPUT_WRITER("작성자 : "),
   INPUT_DATE("날짜 : "),
   // 메시지
-  INPUT_NUMBER("숫자를 입력해주세요."),
+  NOT_NUMBER("숫자를 입력해주세요."),
   WRONG_INPUT("잘못 입력하셨습니다. 다시 입력해주세요."),
   NO_BOARD("해당 게시물이 없습니다."),
   // 결과
