@@ -1,11 +1,17 @@
 package NewBoardProgramming.controller;
 
 import NewBoardProgramming.dao.BoardCRUDimpl;
+import NewBoardProgramming.exceptions.BoardException;
+import NewBoardProgramming.exceptions.BoardExceptionList;
+import NewBoardProgramming.exceptions.ErrorCode;
 import NewBoardProgramming.interfaces.BoardCRUD;
 import NewBoardProgramming.dto.Board;
+import NewBoardProgramming.vo.Messages;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class MainMenu extends PrintBoard {
 
@@ -14,92 +20,96 @@ public class MainMenu extends PrintBoard {
   Board board;
   SubMenu subMenu;
 
-  public void list() {
-    System.out.println("[게시물 목록]");
-    System.out.println("--------------------------------------------");
-    System.out.println("no\twriter\tdate\t\ttitle");
-    System.out.println("--------------------------------------------");
-
+  public void list() throws SQLException, IOException {
+    Messages.BOARD_LIST.println();
+    Messages.BOARD_LIST_DIVIDER.println();
+    Messages.BOARD_LIST_HEADER.println();
+    Messages.BOARD_LIST_DIVIDER.println();
     printBoardList(boardCRUD.selectAll());
-
-    System.out.println();
-    System.out.println("--------------------------------------------");
+    Messages.NEXTLINE.print();
+    Messages.BOARD_LIST_DIVIDER.println();
 
     mainMenu();
   }
 
-  public void mainMenu() {
+  public void mainMenu() throws SQLException, IOException {
     while (true) {
-      System.out.println("메인 메뉴 : 1.Create | 2.Read | 3.Clear | 4.Exit");
-      System.out.print("메뉴 선택 : ");
+      Messages.MAIN_MENU.println();
+      Messages.MENU_CHOICE.print();
 
       int num = 0;
       try {
         num = Integer.parseInt(br.readLine());
-      } catch (IOException e) {
-        e.printStackTrace();
+      } catch (NumberFormatException e) {
+        System.out.println(ErrorCode.NOT_A_NUMBER.getMessage());
+        continue;
       }
 
-      switch (num) {
-        case 1: //create
-          try {
+      try {
+        switch (num) {
+          case 1: //create
             create();
-          } catch (IOException e) {
-            throw new RuntimeException(e);
-          }
-
-          break;
-        case 2: //read
-          try {
+            break;
+          case 2: //read
             read();
-          } catch (IOException e) {
-            throw new RuntimeException(e);
-          }
-          break;
-        case 3: //clear
-          clear();
-          break;
-        case 4: //exit
-          exit();
-        default:
-          System.out.println("잘못 입력하셨습니다. 다시 입력해주세요.");
+            break;
+          case 3: //clear
+            clear();
+            break;
+          case 4: //exit
+            exit();
+          default:
+            throw new BoardException(ErrorCode.INVALID_INPUT_VALUE);
+        }
+      } catch (BoardException e) {
+        //
       }
     }
   }
 
-  public void create() throws IOException {
+  public void create() throws IOException, SQLException {
     board = new Board();
 
-    System.out.println("[새 게시물 입력]");
-    System.out.print("제목 : ");
+    Messages.INPUT_LIST.println();
+    Messages.INPUT_TITLE.print();
     board.setBtitle(br.readLine());
-    System.out.println("내용 : ");
+    Messages.INPUT_CONTENT.print();
     board.setBcontent(br.readLine());
-    System.out.print("작성자 : ");
+    Messages.INPUT_WRITER.print();
     board.setBwriter(br.readLine());
-    board.setDate("2021-07-07");//하드 코딩 수정 예정
+    board.setDate(LocalDate.now().toString());
 
     //
     printResult(boardCRUD.create(board));
   }
 
-  public void read() throws IOException {
+  public void read() throws IOException, SQLException {
     System.out.print("bno : ");
-    int num = Integer.parseInt(br.readLine());
+    int num = 0;
+    try {
+      num = Integer.parseInt(br.readLine());
+    } catch (NumberFormatException e) {
+      System.out.println(ErrorCode.NOT_A_NUMBER.getMessage());
+      return;
+    }
 
     board = boardCRUD.selectOne(num);
+    if (!BoardExceptionList.isBoardExist(board.getBno())) {
+      throw new BoardException(ErrorCode.BOARD_NOT_FOUND);
+    }
+
     printBoard(board);
 
     subMenu = new SubMenu();
     subMenu.subMenu_read(board);
   }
 
-  public void clear() {
+  public void clear() throws SQLException {
     boardCRUD.clear();
   }
 
   public void exit() {
-    System.out.println("프로그램을 종료합니다.");
+    Messages.EXIT.println();
     System.exit(0);
   }
 }
