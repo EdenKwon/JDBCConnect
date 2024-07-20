@@ -1,4 +1,4 @@
-package NewBoardProgramming.vo;
+package NewBoardProgramming.dto;
 
 import lombok.Data;
 

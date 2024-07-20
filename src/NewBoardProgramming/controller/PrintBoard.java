@@ -1,17 +1,9 @@
 package NewBoardProgramming.controller;
 
-import NewBoardProgramming.vo.Board;
+import NewBoardProgramming.dto.Board;
 import java.util.List;
 
 public class PrintBoard {
-
-  private static final PrintBoard instance = null;
-
-  private PrintBoard() {}
-
-  public static PrintBoard getInstance() {
-    return instance;
-  }
 
   //list 출력 하는 경우, 수행 결과 int, Board 한 개
   public void printResult(int result) {
@@ -38,8 +30,8 @@ public class PrintBoard {
   }
 
   public void printBoard(Board board) {
-    System.out.println("제목 : " + board.getBno());
-    System.out.println("제목 : " + board.getBwriter());
+    System.out.println("번호 : " + board.getBno());
+    System.out.println("제목 : " + board.getBtitle());
     System.out.println("내용 : " + board.getBcontent());
     System.out.println("작성자 : " + board.getBwriter());
     System.out.println("날짜 : " + board.getDate());

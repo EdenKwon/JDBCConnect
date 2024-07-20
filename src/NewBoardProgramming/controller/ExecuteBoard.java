@@ -4,6 +4,12 @@ public class ExecuteBoard {
 
   public static void main(String[] args) {
     MainMenu menu = new MainMenu();
-    menu.list();
+
+    while (true) {
+      menu.list();
+    }
+
   }
+
+  // 예외처리 enum
 }
