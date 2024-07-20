@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class MainMenu extends PrintBoard {
 
@@ -76,7 +77,7 @@ public class MainMenu extends PrintBoard {
     board.setBcontent(br.readLine());
     Messages.INPUT_WRITER.print();
     board.setBwriter(br.readLine());
-    board.setDate("2021-07-07");//하드 코딩 수정 예정
+    board.setDate(LocalDate.now().toString());
 
     //
     printResult(boardCRUD.create(board));
