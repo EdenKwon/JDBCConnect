@@ -1,4 +1,4 @@
-package vo;
+package JDBCMemberManagement.vo;
 
 public interface MemberCRUD {
 

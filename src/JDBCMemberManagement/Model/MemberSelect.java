@@ -1,12 +1,12 @@
-package Model;
+package JDBCMemberManagement.Model;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import vo.ConnectionFactory;
-import vo.Member;
-import vo.MemberCRUD;
+import JDBCMemberManagement.vo.ConnectionFactory;
+import JDBCMemberManagement.vo.Member;
+import JDBCMemberManagement.vo.MemberCRUD;
 
 public class MemberSelect implements MemberCRUD {
 
