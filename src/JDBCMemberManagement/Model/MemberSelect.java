@@ -1,10 +1,17 @@
+package JDBCMemberManagement.Model;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import vo.Member;
+import JDBCMemberManagement.vo.ConnectionFactory;
+import JDBCMemberManagement.vo.Member;
+import JDBCMemberManagement.vo.MemberCRUD;
 
-public class MemberSelect {
+public class MemberSelect implements MemberCRUD {
+
+  public MemberSelect() {
+  }
 
   String query = "SELECT * FROM member";
 
@@ -26,19 +33,19 @@ public class MemberSelect {
 
         member.setmemberId(rs.getString("memberid"));
         member.setMemberName(rs.getString("membername"));
-        member.setMemberAge(rs.getString("memberage"));
+        member.setMemberPassword(rs.getString("memberpassword"));
+        member.setMemberAge(rs.getInt("memberage"));
 
         System.out.println(member);
-        System.out.println("전체 멤버 조회를 완료하였습니다.");
-
-        ConnectionFactory.getInstance().close(con);
-        stmt.close();
-        rs.close();
       }
+
+      System.out.println("전체 멤버 조회를 완료하였습니다.");
+      ConnectionFactory.getInstance().close(con);
+      stmt.close();
+      rs.close();
     } /*catch (ClassNotFoundException e) {
       throw new RuntimeException(e);
-    }*/
-    catch (SQLException e) {
+    }*/ catch (SQLException e) {
       throw new RuntimeException(e);
     }
 
