@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import JDBCMemberManagement.vo.ConnectionFactory;
 import JDBCMemberManagement.vo.MemberCRUD;
 
+//
 public class MemberDelete implements MemberCRUD {
 
   private String memberId;
